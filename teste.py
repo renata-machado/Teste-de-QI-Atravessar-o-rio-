@@ -7,19 +7,49 @@ def pode_atravessar(estado, movimento):
     return all(estado[i] == margem_atual for i in movimento)
 
 def estado_valido(estado):
-    margem1 = [i for i, x in enumerate(estado) if x == 1]
+    margem1 = [i for i, x in enumerate(estado) if x == 1]  
+    margem2 = [i for i, x in enumerate(estado) if x == 0]  
+    
     if 1 in margem1:
         if 4 in margem1 or 5 in margem1:
-            if 0 not in margem1 and 6 not in margem1:
+            if 0 not in margem1:
                 return False
     if 0 in margem1:
         if 2 in margem1 or 3 in margem1:
-            if 1 not in margem1 and 6 not in margem1:
+            if 1 not in margem1:
                 return False
     if 7 in margem1:
         if len(margem1) > 1 and 6 not in margem1:
-            return False
+            return False    
+        
+
+
+
+
+    if 1 in margem2:
+        if 4 in margem2 or 5 in margem2:
+            if 0 not in margem2:
+                return False
+    if 0 in margem2:
+        if 2 in margem2 or 3 in margem2:
+            if 1 not in margem2:
+                return False
+    if 7 in margem2:
+        if len(margem2) > 1 and 6 not in margem2:
+            return False 
+        
+
+        
+    
     return True
+
+
+
+
+
+
+
+
 
 def movimentos(estado):
     possiveis = []
@@ -32,7 +62,9 @@ def movimentos(estado):
             novo_estado[j] = 1 - estado[-1]
             novo_estado[-1] = 1 - estado[-1]
             if estado_valido(novo_estado):
-                possiveis.append((novo_estado, (i, j)))
+                if i == 0 or i == 1 or i == 6 or j == 0 or j == 1 or j == 6:
+                    possiveis.append((novo_estado, (i, j)))
+    
     return possiveis
 
 def bfs(inicio, final):
